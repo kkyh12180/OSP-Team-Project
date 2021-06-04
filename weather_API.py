@@ -81,7 +81,17 @@ elif (weather[0][1] == "3" or weather[0][1] == "4"): isSnow = True
 if (weather[1][1] == "1" or weather[1][1] == "2"): isSun = True
 elif (weather[1][1] == "3" or weather [1][1] == "4"): isCloud = True
 
+global output_weather
+
 if ((not isRain and isCloud) or (not isSnow and isCloud)): print("cloudy " + temperature)
-elif (isRain): print("rain " + temperature)
-elif (isSnow): print("snow " + temperature)
-else: print("sunny " + temperature)
+elif (isRain):
+    outputWeather = "rain"
+    print(outputWeather + " " + temperature)
+elif (isSnow):
+    outputWeather = "snow"
+    print(outputWeather + " " + temperature)
+else:
+    outputWeather = "sunny"
+    print(outputWeather + " " + temperature)
+
+output_weather = [outputWeather, temperature]

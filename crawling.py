@@ -43,10 +43,11 @@ def crawling(gu, dong, food):
     print(infos[0])
     print(infos[1])
     print(infos[2])
+    return infos
 
 if __name__== '__main__':
 
    kdong = sys.argv[2] 
    kgu = sys.argv[1]   
    kfood = sys.argv[3] 
-   crawling(kgu, kdong, kfood)
+   informations = crawling(kgu, kdong, kfood)
