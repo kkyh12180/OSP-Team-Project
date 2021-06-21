@@ -4,12 +4,14 @@ from urllib.request import urlopen
 from urllib.parse import quote
 from bs4 import BeautifulSoup
 import sys
+import ssl
  
 def crawling(gu, dong, food):
 
     region = quote("대구")
+    context = ssl._create_default_https_context = ssl.SSL_ERROR_WANT_CONNECT.create_unverified_context()
     string = "https://search.naver.com/search.naver?where=nexearch&sm=top_hty&fbm=1&ie=utf8&query=" + region + "+" + quote(gu) + "+" + quote(dong) + "+" + quote(food)
-    tmp = urlopen(string)
+    tmp = urlopen(string, context=context)
     url = tmp.read().decode("utf-8")
     
     soup = BeautifulSoup(url, "html.parser")

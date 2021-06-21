@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/python
 #-*- coding:utf-8 -*-
 from urllib.parse import urlencode, quote_plus
 import requests
