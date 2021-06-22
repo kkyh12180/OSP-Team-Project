@@ -26,6 +26,7 @@
             var seo = ["내당동", "비산동", "상리동", "원대동1가", "원대동2가", "원대동3가", "이현동", "중리동", "평리동"];
             var suseong = ["가천동", "고모동", "노변동", "대흥동", "두산동", "만촌동", "매호동", "범물동", "범어동", "사월동", "삼덕동", "상동", "성동", "수성동1가", "수성동2가", "수성동3가", "수성동4가", "시지동", "신매동", "연호동", "욱수동", "이천동", "중동", "지산동", "파동", "황금동"];
             var jung = ["계산동1가", "계산동2가", "공평동", "교동", "남산동", "남성로", "남일동", "달성동", "대봉동", "대신동", "대안동", "덕산동", "도원동", "동문동", "동산동", "동성로1가", "동성로2가", "동성로3가", "동인동1가", "동인동2가", "동인동3가", "동인동4가", "동일동", "문화동", "봉산동", "북내동", "북성로1가", "북성로2가", "사일동", "삼덕동1가", "삼덕동2가", "삼덕동3가", "상덕동", "상서동", "서내동", "서문로1가", "서문로2가", "서성로1가", "서성로2가", "서야동", "수동", "수창동", "시장북로", "완전동", "용덕동", "인교동", "장관동", "전동", "종로1가", "종로2가", "태평로1가", "태평로2가", "태평로3가", "포정동", "하서동", "향촌동", "화전동"];
+            var dalseo = ["갈산동", "감삼동", "대곡동", "대천동", "도원동", "두류동", "본동", "본리동", "상인동", "성당동", "송현동", "신당동", "용산동", "월성동", "월암동", "유천동", "이곡동", "장기동", "장동", "죽전동", "진천동", "파호동", "호림동", "호산동"]
             var target = document.getElementById("dong");
         
             if(e.value == "a") var d = nam;
@@ -35,6 +36,7 @@
             else if(e.value == "e") var d = seo;
             else if(e.value == "f") var d = suseong;
             else if(e.value == "g") var d = jung;
+            else if(e.value == "h") var d = dalseo
         
             target.options.length = 0;
         
@@ -71,12 +73,13 @@
             <select name = "gu" onchange="categoryChange(this)">
                 <option>구를 선택해주세요</option>
                 <option value="a">남구</option>
-                <option value="b">달성군</option>
+                <option value="b">달서구</option>
                 <option value="c">동구</option>
                 <option value="d">북구</option>
                 <option value="e">서구</option>
                 <option value="f">수성구</option>
                 <option value="g">중구</option>
+                <option value="h">달성구</option>
             </select>
             <select name = "dong" id="dong">
             <option>동/읍/면을 선택해주세요</option>
