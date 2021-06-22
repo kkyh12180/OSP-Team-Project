@@ -28,9 +28,9 @@ def guchange(alpha):
 mysql = MySQL()
 app = Flask(__name__)
 
-#데이터페이스 값을 설정해주는 단계
+#DB 값 설정
 app.config['MYSQL_DATABASE_USER'] = 'root'
-app.config['MYSQL_DATABASE_PASSWORD'] = 'ospteamproject9'
+app.config['MYSQL_DATABASE_PASSWORD'] = 'yellow2090*'
 app.config['MYSQL_DATABASE_DB'] = 'reviewdb'
 app.config['MYSQL_DATABASE_HOST'] = 'localhost'
 app.secret_key = "ABCDEFG"
@@ -47,20 +47,20 @@ def main():
  
         conn = mysql.connect()
         cursor = conn.cursor()
-        sql = "SELECT id FROM members WHERE id = %s AND pw = %s" # 실행할 SQL문
+        sql = "SELECT id FROM members WHERE id = %s AND pw = %s"
         value = (id, pw)
-        cursor.execute("set names utf8") # 한글이 정상적으로 출력이 되지 않는 경우를 위해
-        cursor.execute(sql, value) # 메소드로 전달해 명령문을 실행
+        cursor.execute("set names utf8")
+        cursor.execute(sql, value)
  
-        data = cursor.fetchall() # SQL문을 실행한 결과 데이터를 꺼냄
+        data = cursor.fetchall()
         cursor.close()
         conn.close()
  
         if data:
-            session['login_user'] = id # 로그인 된 후 페이지로 데이터를 넘기기 위해 session을 사용함
-            return redirect(url_for('home')) # home 페이지로 넘어감 (url_for 메소드를 사용해 reviewboard이라는 페이지로 넘어간다)
+            session['login_user'] = id
+            return redirect(url_for('home'))
         else:
-            error = 'invalid input data detected !' # 에러가 발생한 경우
+            error = 'invalid input data detected !'
  
     return render_template('login.html', error = error)
 
@@ -171,7 +171,7 @@ def reviewboard():
         review = request.form['review']
         conn = mysql.connect()
         cursor = conn.cursor()
-        sql = "INSERT INTO reviewlist (store, id, review) VALUES ('%s', '%s', '%s')" % (store, id, review)  # 실행할 SQL문
+        sql = "INSERT INTO reviewlist (store, id, review) VALUES ('%s', '%s', '%s')" % (store, id, review)
         cursor.execute(sql)
         new_data = cursor.fetchall()
 
@@ -203,12 +203,12 @@ def reviewboard():
                 'con': obj[3],
                 'time':obj[4]
             }
-            data_list.append(data_dic) # 완성된 딕셔너리를 list에 넣음
+            data_list.append(data_dic)
  
         cursor.close()
         conn.close()
  
-        return render_template('reviewboard.html', error=error, name=id, data_list=data_list) # html을 렌더하며 DB에서 받아온 값들을 넘김
+        return render_template('reviewboard.html', error=error, name=id, data_list=data_list)
  
     return render_template('reviewboard.html', error=error, name=id)
 
