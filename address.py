@@ -22,7 +22,7 @@ def guchange(alpha):
     if alpha=="g":
         return str("중구")    
     if alpha=="h":
-        return str("달")                     
+        return str("달성군")                     
 
 app = Flask(__name__)
 
