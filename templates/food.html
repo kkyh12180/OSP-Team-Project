@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>음식 추천</title>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic&family=Poor+Story&display=swap');
         select.absolute{
             position: absolute;
             left:400px;
@@ -16,31 +17,42 @@
 </head>
 <body>
     <div class="info">
-        <center><a href={{ url_for('home') }}><img src="{{url_for('static', filename='images/logo.png')}}" width="200" height="200"></a></center>
-    <div style="width:10%;height:154px;float:left;">
-        {% if engw == "sunny" %}
-            <img src= "{{url_for('static',filename='images/sunny.png')}}" width="200" height="200">
-        {% elif engw == "cloudy" %}
-            <img src= "{{url_for('static',filename='images/cloudy.png')}}" width="200" height="200">
-        {% elif engw == "rainy" %}
-            <img src= "{{url_for('static',filename='images/rainy.png')}}" width="200" height="200">
-        {% elif engw == "snowy" %}
-            <img src= "{{url_for('static',filename='images/snowy.png')}}" width="200" height="200">  
-        {% endif %}  
-    </div>
-        <center>
-            <span style="font-style:italic; font-weight:bold;font-size:2em;color:navy;font-family:arial;">
-                <br>오늘 대구 {{myGu}} {{myDong}} 의 날씨는 {{weather}}!<br>
-                기온은 {{temperature}}도 입니다!<br><br>
-            </span>
-        </center>
-    </div>
-    <div class="foodlist">
-        <form action="/storelist" method="POST"><!--action 속성에는 이동할 웹페이지 주소 기입-->
+        <div style="text-align:left; margin-left:90px;">
+            <a href={{ url_for('home') }}><img src="{{url_for('static', filename = 'images/logo1.png')}}" width="280" height="280" alt="logo" border="0"></a>
+        </div>
+    <div style="border:dashed orange; background-color:white; z-index:2; border-radius:30px; width:750px; height:300px; position:absolute; left:30%; margin-top:-220px;">
+        <div style="text-align:center; margin-top:30px;">
+            {% if engw == "sunny" %}
+                <img src= "{{url_for('static',filename='images/sunny.png')}}" width="150" height="150">
+            {% elif engw == "cloudy" %}
+                <img src= "{{url_for('static',filename='images/cloudy.png')}}" width="150" height="150">
+            {% elif engw == "rainy" %}
+                <img src= "{{url_for('static',filename='images/rainy.png')}}" width="150" height="150">
+            {% elif engw == "snowy" %}
+                <img src= "{{url_for('static',filename='images/snowy.png')}}" width="150" height="150">  
+            {% endif %}  
+        </div>
+        <span style="font-size:2em; font-family:'Poor Story';">
             <center>
-            <select name="food" style="width:400px; height:250px; font-size: 7em;">
+                <br>"오늘 대구 {{myGu}} {{myDong}}의 기온은 
+                <span style="color:orange; font-family:'Poor Story';">
+                    {{temperature}}도
+                </span>
+                이며, 
+                 <span style="color:orange; font-family:'Poor Story';">
+                    {{weather}}!
+                </span>"
+            </center>
+        </span>
+    </div>
+    </div>
+    <div style="font-family:'Poor Story'; background-color:#FFFFE0; z-index:1; border-radius:30px; position:absolute; top:40%; left:17%; width:1200px; height:400px;">
+    <div class="foodlist">
+        <form action="/storelist" method="POST">
+            <center>
+            <select name="food" style="width:180px; height:40px; left:80; margin-top:60px; font-size: 1.3em;">
                 {% if engw == "sunny" %}
-                    <option value="">다른음식선택</option>
+                    <option value="">음식 선택</option>
                     <option value="팥빙수">팥빙수</option>
                     <option value="수박화채">수박화채</option>
                     <option value="냉면">냉면</option>
@@ -51,21 +63,21 @@
                     <option value="비빔국수">비빔국수</option>
                     <option value="삼계탕">삼계탕</option>
                 {% elif engw == "cloudy" %}
-                    <option value="">다른음식선택</option>
+                    <option value="">음식 선택</option>
                     <option value="칼국수">칼국수</option>
                     <option value="짬뽕">짬뽕</option>
                     <option value="수제비">수제비</option>
                     <option value="매운탕">매운탕</option>
                     <option value="국밥">국밥</option>
                 {% elif engw == "rainy" %}
-                    <option value="">다른음식선택</option>
+                    <option value="">음식 선택</option>
                     <option value="파전">파전</option>
                     <option value="막걸리">막걸리</option>
                     <option value="칼국수">칼국수</option>
                     <option value="삼겹살">삼겹살</option>
                     <option value="짬뽕">짬뽕</option>
                 {% else %}
-                    <option value="">다른음식선택</option>
+                    <option value="">음식 선택</option>
                     <option value="우동">우동</option>
                     <option value="분식">분식</option>
                     <option value="칼국수">칼국수</option>
@@ -76,43 +88,28 @@
                     <option value="찌개">찌개</option>
                 {% endif %}
                 </select>
-                <input type="submit" value="이게 먹고 싶어요!" style="width:150px; height:100px; font-size: 2em;">
+                <input type="submit" value="이게 먹고 싶어요!" style="font-family:'Poor Story'; background-color:orange; border:0; font-size:23px; border-radius:5px; color:white;">
             </center>
-            
         <input type="hidden" name="myGu" value={{myGu}}>
-        <input type="hidden" name="myDong" value ={{myDong}} >
-        
+        <input type="hidden" name="myDong" value ={{myDong}}>
         </form>
     </div>
-    <div style="position:absolute; left:550px; height:150px; top:480px; border:1 px solid black; ">
-        <ul class="foodlist" name = "food">
-            <span style="font-size:30px; color:blue;font-family:arial;">
+    <div style="position:absolute; top:110px; left:30%; font-size:26px; font-family:'Nanum Gothic', arial;">
+        오늘처럼 {{engw}}한 날에는 이런 음식 어떠세요?<br><br>
+        <ul class="foodlist" name = "food" style="bo">
+            <span style="font-size:30px; color:orange; font-family:'Poor Story', arial;">
             {% if engw == "sunny" %}
-                팥빙수<br>수박화채<br>냉면<br>초계국수<br>메밀소바<br>콩국수<br>냉면<br>비빔국수<br>삼계탕
-                
+                팥빙수, 수박화채, 냉면, 초계국수, 메밀소바<br>콩국수, 냉면, 비빔국수, 삼계탕
             {% elif engw == "cloudy" %}
-                칼국수<br>짬뽕<br>수제비<br>매운탕<br>국밥<br>
-                
+                칼국수, 짬뽕, 수제비, 매운탕, 국밥
             {% elif engw == "rainy" %}
-                파전<br>막걸리<br>칼국수<br>삼겹살<br>짬뽕<br>
-    
+                파전, 막걸리, 칼국수, 삼겹살, 짬뽕
             {% else %}
-                우동<br>분식<br>칼국수<br>전골<br>샤브샤브<br>만두<br>수제비<br>찌개<br>
-                
+                우동, 분식, 칼국수, 전골, 샤브샤브<br>만두, 수제비, 찌개
             {% endif %} 
         </span>          
         </ul>
     </div>
-    <div style="position: absolute; left:100px; height:150px; top : 500px;  ">
-        <span style="font-size:25px;color:green;font-family:arial;">{{engw}}한 날에는 이런 음식이 최고죠~! --><br>목록을 보시고 먹고 싶은 음식을 선택해주세요!<br>
-        </span>
     </div>
-    <div>
-        실시간 랭킹!
-        1. {{foodlist[0]}}
-        2. {{foodlist[1]}}
-        3. {{foodlist[2]}}
-    </div>
-
 </body>
 </html>
