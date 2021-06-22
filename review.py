@@ -1,3 +1,4 @@
+#!/usr/bin/python
 from flask import Flask, session, render_template, redirect, request, url_for
 from flaskext.mysql import MySQL
  
