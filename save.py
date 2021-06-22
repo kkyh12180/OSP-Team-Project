@@ -10,7 +10,7 @@ es = Elasticsearch([{'host':es_host, 'port':es_port}], timeout = 30)
 def save_data(weather, food):
     # ID - hot : 1, cold : 2, rainy : 3, snowy : 4
 
-    if (weather == "hot"):
+    if (weather == "sunny"):
         r = es.get(index='food', doc_type='weather', id=1)
         food_list = list(r['_source']['Food'])
         frequency_list = list(r['_source']['Frequency'])
@@ -28,7 +28,7 @@ def save_data(weather, food):
             food_list.append(food)
             frequency_list.append(1)
             dic = {
-                "Weather" : "hot",
+                "Weather" : "sunny",
                 "Food" : tuple(food_list),
                 "Frequency" : tuple(frequency_list)
             }
@@ -46,7 +46,7 @@ def save_data(weather, food):
             new_food_list.append(merge_list[j][1])
         
         dic = {
-            "Weather" : "hot",
+            "Weather" : "sunny",
             "Food" : tuple(new_food_list),
             "Frequency" : tuple(new_freq_list)
         }
@@ -55,7 +55,7 @@ def save_data(weather, food):
         print(res)
         return
 
-    elif (weather == "cold"):
+    elif (weather == "cloudy"):
         r = es.get(index='food', doc_type='weather', id=2)
         food_list = list(r['_source']['Food'])
         frequency_list = list(r['_source']['Frequency'])
@@ -73,7 +73,7 @@ def save_data(weather, food):
             food_list.append(food)
             frequency_list.append(1)
             dic = {
-                "Weather" : "cold",
+                "Weather" : "cloudy",
                 "Food" : tuple(food_list),
                 "Frequency" : tuple(frequency_list)
             }
@@ -91,7 +91,7 @@ def save_data(weather, food):
             new_food_list.append(merge_list[j][1])
         
         dic = {
-            "Weather" : "cold",
+            "Weather" : "cloudy",
             "Food" : tuple(new_food_list),
             "Frequency" : tuple(new_freq_list)
         }
@@ -191,10 +191,10 @@ def save_data(weather, food):
         return
 
 def get_info(weather):
-    if (weather == "hot"):
+    if (weather == "sunny"):
         dic = es.get(index='food', doc_type='weather', id=1)
         return dic
-    elif (weather == "cold"):
+    elif (weather == "cloudy"):
         dic = es.get(index='food', doc_type='weather', id=2)
         return dic
     elif (weather == "rainy"):
@@ -207,5 +207,5 @@ def get_info(weather):
 '''
 #test
 if __name__== '__main__':
-    save_data("hot", "삼계탕")
+    save_data("sunny", "삼계탕")
 '''

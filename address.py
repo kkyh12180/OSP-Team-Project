@@ -3,6 +3,8 @@ from flask import Flask, render_template, request
 from werkzeug.utils import HTMLBuilder
 import weather_API
 import crawling
+import init_data
+import save
 
 def guchange(alpha):
     if alpha=="a":
@@ -18,7 +20,9 @@ def guchange(alpha):
     if alpha=="f":
         return str("수성구")   
     if alpha=="g":
-        return str("중구")                         
+        return str("중구")    
+    if alpha=="h":
+        return str("달서구")                     
 
 app = Flask(__name__)
 
@@ -44,7 +48,15 @@ def result():
             weather = str("비가 옵니다")
         else:
             weather = str("눈이 옵니다")
-        return render_template('food.html', result=result, myGu=myGu, myDong=myDong, weather=weather, engw=list[0], temperature=list[1])
+        rank={}
+        rank = save.get_info(list[0])
+        sourcelist=[]
+        sourcelist=rank.get('_source')
+        foodlist=[]
+        foodlist=sourcelist.get('Food')
+        frelist=[]
+        frelist=sourcelist.get('Frequency')    
+        return render_template('food.html', result=result, myGu=myGu, myDong=myDong, foodlist=foodlist, weather=weather, engw=list[0], temperature=list[1])
 
 @app.route("/storelist", methods = ['POST', 'GET'])
 def foodlist():
@@ -59,6 +71,7 @@ def foodlist():
         name = []
         rating = []
         link = []
+        save.save_data(list[0], myFood)
         i=0
         myStoreList = crawling.crawling(myGu, myDong, myFood)
         if(len(myStoreList)<3):

@@ -30,13 +30,13 @@
             var target = document.getElementById("dong");
         
             if(e.value == "a") var d = nam;
-            else if(e.value == "b") var d = dalseo;
+            else if(e.value == "b") var d = dalseong;
             else if(e.value == "c") var d = dong;
             else if(e.value == "d") var d = buk;
             else if(e.value == "e") var d = seo;
             else if(e.value == "f") var d = suseong;
             else if(e.value == "g") var d = jung;
-            else if(e.value == "h") var d = dalseong;
+            else if(e.value == "h") var d = dalseo
         
             target.options.length = 0;
         
@@ -73,13 +73,13 @@
             <select name = "gu" onchange="categoryChange(this)">
                 <option>구를 선택해주세요</option>
                 <option value="a">남구</option>
-                <option value="b">달서구</option>
+                <option value="b">달성군</option>
                 <option value="c">동구</option>
                 <option value="d">북구</option>
                 <option value="e">서구</option>
                 <option value="f">수성구</option>
                 <option value="g">중구</option>
-                <option value="h">달성구</option>
+                <option value="h">달서구</option>
             </select>
             <select name = "dong" id="dong">
             <option>동/읍/면을 선택해주세요</option>
