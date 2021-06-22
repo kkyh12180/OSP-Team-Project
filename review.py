@@ -7,7 +7,7 @@ app = Flask(__name__)
  
 #데이터페이스 값을 설정해주는 단계
 app.config['MYSQL_DATABASE_USER'] = 'root'
-app.config['MYSQL_DATABASE_PASSWORD'] = 'yellow2090*'
+app.config['MYSQL_DATABASE_PASSWORD'] = 'ospteamproject9'
 app.config['MYSQL_DATABASE_DB'] = 'reviewdb'
 app.config['MYSQL_DATABASE_HOST'] = 'localhost'
 app.secret_key = "ABCDEFG"
