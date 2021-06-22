@@ -8,13 +8,12 @@
 </head>
 <body style="background-image:url('http://www.matcl.com/files/attach/images/2791205/082/807/002/a29827b8f3acef3569efd91b5902adb3.jpg'); background-repeat:repeat; background-size: 100px 100px; font-family: sans-serif";>
     <div style="text-align:center; margin-top:-130px">
-        <!--<a href={{ url_for('home') }}><img src="C:\Users\이은지\Desktop\OSP-TeamPJ\static\images\logo2.png" alt="logo" border="0"></a>-->
         <a href={{ url_for('home') }}><img src="{{url_for('static', filename = 'images/logo2.png')}}" alt="logo" border="0"></a>
     </div>
     <div style="float:right; margin-top:-170px; margin-right:200px;">
     <form action="/storelist" method="POST"><!--action 속성에는 이동할 웹페이지 주소 기입-->
             <select name="food" style="width:180px; height:40px; left:80; font-size: 1.5em;">
-                {% if engw=="sunny" %}
+                {% if myWeather=="sunny" %}
                     <option value="">다른음식선택</option>
                     <option value="팥빙수">팥빙수</option>
                     <option value="회사원">수박화채</option>
@@ -25,14 +24,14 @@
                     <option value="냉면">냉면</option>
                     <option value="비빔국수">비빔국수</option
                     ><option value="삼계탕">삼계탕</option>
-                {% elif engw=="cloudy" %}
+                {% elif myWeather=="cloudy" %}
                     <option value="">다른음식선택</option>
                     <option value="칼국수">칼국수</option>
                     <option value="짬뽕">짬뽕</option>
                     <option value="수제비">수제비</option>
                     <option value="매운탕">매운탕</option>
                     <option value="국밥">국밥</option>
-                {% elif engw=="rain" %}
+                {% elif myWeather=="rain" %}
                     <option value="">다른음식선택</option>
                     <option value="파전">파전</option>
                     <option value="막걸리">막걸리</option>
@@ -46,41 +45,41 @@
                     <option value="칼국수">칼국수</option>
                     <option value="전골">전골</option>
                     <option value="샤브샤브">샤브샤브</option>
-                    <option value="만두와호빵">만두</option>
+                    <option value="만두">만두</option>
                     <option value="수제비">수제비</option>
                     <option value="찌개">찌개</option>
                 {% endif %}
             </select>
-        <input type="hidden" name="myGu" value={{myGu}}>
-        <input type="hidden" name="myDong" value ={{myDong}} >
+        <input type="hidden" name="myGu" value={{ myGu }}>
+        <input type="hidden" name="myDong" value ={{ myDong }} >
         <input type="submit" value="이게 먹고 싶어요!">
     </form>
     </div>
     <div style="font-size: 1.7em; position:absolute; top:24%; left:50%; margin-left:-300px; font-weight:600;">
-        {{myFood}}을(를) 파는 음식점은 아래와 같아요!
+        대구 {{ myGu }}, {{ myDong }}에 {{ myFood }}을(를) 파는 음식점은 아래와 같아요!
     </div>
     <div style="border:dashed green; border-right:none; position:absolute; top:60%; left:50%; overflow:auto; width:1500px; height:650px;background-color:white; margin:-300px 0px 0px -750px; font-size: 2em; border-radius: 30px 0px 0px 30px;">
         <!--key로는 구, 동, 음식종류-->
         <div style="border:1px solid black;padding:3%; margin: 3%">
-            가게이름: {{name[0]}}, 별점정보: {{rating[0]}}<br>
+            가게이름: {{name[0]}}, {{rating[0]}}
             <a href={{link[0]}} target="blank">링크</a>
-            <form action="/review.html" method="POST">
+            <form action="/review" method="POST">
                 <input type="hidden" name="storename" value={{name[0]}}>
                 <input type="submit" value="리뷰보기">
             </form>
         </div>
         <div style="border:1px solid black;padding:3%; margin: 3%">
-            가게이름: {{name[1]}}, 별점정보: {{rating[1]}}<br> 
+            가게이름: {{name[1]}}, {{rating[1]}}
             <a href={{link[1]}} target="blank">링크</a>
-            <form action="/review.html" method="POST">
+            <form action="/review" method="POST">
                 <input type="hidden" name="storename" value={{name[1]}}>
                 <input type="submit" value="리뷰보기">
             </form>
         </div>
         <div style="border:1px solid black;padding:3%; margin: 3%">
-            가게이름: {{name[2]}}, 별점정보: {{rating[2]}}<br>
+            가게이름: {{name[2]}}, {{rating[2]}}
             <a href={{link[2]}} target="blank">링크</a>
-            <form action="/review.html" method="POST">
+            <form action="/review" method="POST">
                 <input type="hidden" name="storename" value={{name[2]}}>
                 <input type="submit" value="리뷰보기">
             </form>
