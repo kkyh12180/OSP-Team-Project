@@ -4,51 +4,44 @@ from urllib.request import urlopen
 from urllib.parse import quote
 from bs4 import BeautifulSoup
 import sys
-import ssl
  
 def crawling(gu, dong, food):
 
     region = quote("대구")
-    context = ssl._create_default_https_context = ssl.SSL_ERROR_WANT_CONNECT.create_unverified_context()
-    string = "https://search.naver.com/search.naver?where=nexearch&sm=top_hty&fbm=1&ie=utf8&query=" + region + "+" + quote(gu) + "+" + quote(dong) + "+" + quote(food)
-    tmp = urlopen(string, context=context)
+    string = "https://search.naver.com/search.naver?where=nexearch&sm=top_sly.hst&fbm=1&acr=2&acq=%EB%8C%80%EA%B5%AC+&qdt=0&ie=utf8&query=" + region + "+" + quote(gu) + "+" + quote(dong) + "+" + quote(food)
+    tmp = urlopen(string)
     url = tmp.read().decode("utf-8")
-    
+
     soup = BeautifulSoup(url, "html.parser")
-    divs = soup.findAll('div', {'class':'info_area'}) 
-    addresses = soup.findAll('div', {'class':'txt address'})
+    divs = soup.findAll('ul', {'class' : '_3bohv _1V_Nc'}) 
+    
     infos = []
     name = ""
-    address = ""
+    link = ""
     rating = ""
     for div in divs:
-        name_sects = div.findAll('a')
-        for name_sect in name_sects:
-            name = name_sect.text
-        name = name[2:] 
+        sects = div.findAll('div', {'class' : '_3hn9q'})
+        for sect in sects:
+            name = ""
+            rating = ""
+            name_sects = sect.findAll('span', {'class' : 'OXiLu'})
+            for name_sect in name_sects:
+                name = name_sect.text
         
-        address_sects = div.findAll('div', {'class' : 'txt address'})
-        for address_sect in address_sects:
-            addresses = address_sect.text
-            if (len(str(addresses)) > 0 and str(addresses).find("지번") >= 0):
-                address = str(addresses).split("지번")
-        
-        rating_sects = div.findAll('span', {'class' : 'rating'})
-        for rating_sect in rating_sects:
-            rating = rating_sect.text
+            link_sects = sect.findAll('a', href=True)
+            for link_sect in link_sects:
+                link = link_sect['href']
 
-        if (len(address) > 0):
-            infos.append([name, address[0], rating])
-        else:
-            infos.append([name, address, rating])
+            rating_sects = sect.findAll('span', {'class' : '_2FqTn _1mRAM'})
+            for rating_sect in rating_sects:
+                rating = rating_sect.text
 
-    print(infos[0])
-    print(infos[1])
-    print(infos[2])
+            infos.append([name, rating, link])
+    return infos
 
 if __name__== '__main__':
 
-   kdong = sys.argv[2] 
-   kgu = sys.argv[1]   
-   kfood = sys.argv[3] 
+   kdong = "산격3동"
+   kgu = "북구"   
+   kfood = "떡볶이"
    crawling(kgu, kdong, kfood)
