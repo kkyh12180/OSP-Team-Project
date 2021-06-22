@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>날름날음 로그인</title>
+    <style>
+        body{padding:0px; margin:0px;}
+
+        #divPosition{
+            background-color:gold;
+            border:1px;
+            position:absolute;
+            height:400px;
+            width:500px;
+            margin:-150px 0px 0px -200px;
+            top:40%;
+            left:40%;
+            padding:5px;
+        }
+    </style>
+</head>
+<body>
+<form method="POST" id="authForm">
+    <div id = "divPosition">
+        <p>
+        <h1 align="center">안녕하세요!</h1>
+        <h2 align="center">날름날음에 오신 것을 환영합니다!</h2>
+        <h3></h3>
+        </p>
+        <h3 align="center"> 로그인을 해주세요</h3>
+        <p align="center">
+            <label for="id">아이디&nbsp&nbsp&nbsp</label>
+            <input type="text" id="id" name="id" placeholder="id">
+        </p>
+ 
+        <p align="center">
+            <label for="pw">비밀번호</label>
+            <input type="password" id="pw" name="pw" placeholder="pw">
+        </p>
+        <p align="center">
+            <input type="submit" name="sign_in" value="sign in" style="WIDTH: 183pt"/>
+        </p>
+        <p align="center">
+            <input type=button style="WIDTH: 183pt; background-color:transparent;  border:0px transparent solid;"
+                value="Register" name="register" onclick="location.href='register.html'">
+        </p>
+    </div>
+ 
+</form>
+ 
+</body>
+</html>
