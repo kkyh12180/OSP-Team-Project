@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:float="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Review</title>
+    <style>
+        table {
+            width: 100%;
+            border-top: 1px solid #444444;
+            border-collapse: collapse;
+        }
+        th, td {
+            border-bottom: 1px solid #444444;
+            padding: 10px;
+            text-align: center;
+        }
+        th {
+            background-color: #bbdefb;
+        }
+        td {
+            background-color: #e3f2fd;
+        }
+</style>
+</head>
+ 
+<body>
+    <p>
+        <h1 align="center"> 여러분의 후기를 남겨주세요! </h1>
+    </p>
+ 
+    <form method="POST">
+        <p>
+            <h2>한줄평 남기기</h2>
+            <label>가게이름 &nbsp&nbsp
+                <input type="text" name="store">
+            </label>한줄평 &nbsp&nbsp
+                <input type="text" name="review">
+            </label>
+            &nbsp
+            <input type="submit" value="작성하기" onclick="alert('작성 완료!')">
+        </p>
+    </form>
+ 
+    <table class="table">
+        <tr>
+            <th>순서</th>
+            <th>음식점</th>
+            <th>작성자</th>
+            <th>내용</th>
+            <th>작성시간</th>
+        </tr>
+        {% for obj in data_list%}
+        <tbody>
+            <tr>
+                <td>{{obj.number}}</td>
+                <td>{{obj.restaruant}}</td>
+                <td>{{obj.writer}}</td>
+                <td>{{obj.con}}</td>
+                <td>{{obj.time}}</td>
+            </tr>
+        </tbody>
+        {% endfor %}
+    </table>
+</body>
+ 
+</html>
