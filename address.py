@@ -38,17 +38,13 @@ def result():
         list = weather_API.get_weather()
         if list[0] == "sunny":
             weather = str("화창합니다")
-            icon = str("{{url_for(static,filename=images/sunny.png)}}")
         elif list[0] == "cloudy":
             weather = str("흐립니다")
-            # icon = str("{{url_for('static',filename='images/cloudy.png')}}")
         elif list[0] == "rainy":
             weather = str("비가 옵니다")
-            # icon = str("{{url_for('static',filename='images/rainy.png')}}")
         else:
             weather = str("눈이 옵니다")
-            # icon = str("{{url_for('static',filename='images/snowy.png')}}")
-        return render_template('food.html', result=result, myGu=myGu, myDong=myDong, weather=weather, icon = icon, engw=list[0], temperature=list[1])
+        return render_template('food.html', result=result, myGu=myGu, myDong=myDong, weather=weather, engw=list[0], temperature=list[1])
 
 @app.route("/storelist", methods = ['POST', 'GET'])
 def foodlist():
@@ -59,9 +55,30 @@ def foodlist():
         list = []
         list = weather_API.get_weather()
         myFood = request.form['food']
+        myStoreList = []
+        name = []
+        rating = []
+        link = []
+        i=0
         myStoreList = crawling.crawling(myGu, myDong, myFood)
-        return render_template("storelist.html", result=result, myFood=myFood, myWeather=list[0], myStoreList=myStoreList)
+        if(len(myStoreList)<3):
+            for i in range(0,len(myStoreList)):
+                name.append(myStoreList[i][0])
+                rating.append(myStoreList[i][1])
+                link.append(myStoreList[i][2])
+        else:        
+            name.append(myStoreList[0][0])
+            rating.append(myStoreList[0][1])
+            link.append(myStoreList[0][2])
+            name.append(myStoreList[1][0])
+            rating.append(myStoreList[1][1])
+            link.append(myStoreList[1][2])
+            name.append(myStoreList[2][0])
+            rating.append(myStoreList[2][1])
+            link.append(myStoreList[2][2])
 
+        
+        return render_template("storelist.html", myGu=myGu, myDong=myDong, result=result, myFood=myFood, myWeather=list[0], name = name, link = link, rating = rating)
 
 if __name__ == '__main__':
     app.run(debug = True)
