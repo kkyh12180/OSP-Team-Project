@@ -23,7 +23,7 @@ def guchange(alpha):
     if alpha=="g":
         return str("중구")    
     if alpha=="h":
-        return str("달성구")                     
+        return str("달성군")                     
 
 mysql = MySQL()
 app = Flask(__name__)
