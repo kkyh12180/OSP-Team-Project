@@ -1,216 +1,92 @@
-#!/usr/bin/python
-from flask import Flask, session, render_template, redirect, request, url_for
-from flaskext.mysql import MySQL
-from werkzeug.utils import HTMLBuilder
-import weather_API
-import crawling
-import init_data
-import save
-
-def guchange(alpha):
-    if alpha=="a":
-        return str("남구")
-    if alpha=="b":
-        return str("달성군")
-    if alpha=="c":
-        return str("동구")
-    if alpha=="d":
-        return str("북구")   
-    if alpha=="e":
-        return str("서구")   
-    if alpha=="f":
-        return str("수성구")   
-    if alpha=="g":
-        return str("중구")    
-    if alpha=="h":
-        return str("달서구")                     
-
-mysql = MySQL()
-app = Flask(__name__)
-
-#데이터페이스 값을 설정해주는 단계
-app.config['MYSQL_DATABASE_USER'] = 'root'
-app.config['MYSQL_DATABASE_PASSWORD'] = 'yellow2090*'
-app.config['MYSQL_DATABASE_DB'] = 'reviewdb'
-app.config['MYSQL_DATABASE_HOST'] = 'localhost'
-app.secret_key = "ABCDEFG"
-mysql.init_app(app)
-
- # 로그인 화면
-@app.route('/', methods=['GET', 'POST'])
-def main():
-    error = None
- 
-    if request.method == 'POST':
-        id = request.form['id']
-        pw = request.form['pw']
- 
-        conn = mysql.connect()
-        cursor = conn.cursor()
-        sql = "SELECT id FROM members WHERE id = %s AND pw = %s" # 실행할 SQL문
-        value = (id, pw)
-        cursor.execute("set names utf8") # 한글이 정상적으로 출력이 되지 않는 경우를 위해
-        cursor.execute(sql, value) # 메소드로 전달해 명령문을 실행
- 
-        data = cursor.fetchall() # SQL문을 실행한 결과 데이터를 꺼냄
-        cursor.close()
-        conn.close()
- 
-        if data:
-            session['login_user'] = id # 로그인 된 후 페이지로 데이터를 넘기기 위해 session을 사용함
-            return redirect(url_for('home')) # home 페이지로 넘어감 (url_for 메소드를 사용해 reviewboard이라는 페이지로 넘어간다)
-        else:
-            error = 'invalid input data detected !' # 에러가 발생한 경우
- 
-    return render_template('login.html', error = error)
-
- # 회원가입 화면
-@app.route('/register.html', methods=['GET', 'POST'])
-def register():
-    error = None
-    if request.method == 'POST':
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>날름날음날씨와음식</title>
+    <style>
+        body{ padding:0px; margin:0px;}
+        #divPosition{
+            position:relative;
+            height:300px;
+            width:700px;
+            margin:0px 0px 0px -290px;
+            top:45%;
+            left:50%;
+            padding:5px;
+        }
+    </style>
+    <script type = "text/javascript">
+        function categoryChange(e) {
+            var nam = ["대명동", "봉덕동", "이천동"];
+            var dalseong = ["가창면", "구지면", "논공읍", "다사읍", "옥포읍", "유가읍", "하빈면", "현풍읍", "화원읍"];
+            var dong = ["각산동", "검사동", "괴전동", "금강동", "내곡동", "내동", "능성동", "대림동", "덕곡동", "도동", "도학동", "동내동", "동호동", "둔산동", "매여동", "미곡동", "미대동", "방촌동", "백안동", "봉무동", "부동", "불로동", "사복동", "상매동", "서호동", "송정동", "숙천동", "신기동", "신무동", "신서동", "신암동", "신용동", "신천동", "신평동", "용계동", "용수동", "율암동", "율하동", "입석동", "중대동", "지묘동", "지저동", "진인동", "평광동", "효목동"];
+            var buk = ["검단동", "고성동1가", "고성동2가", "고성동3가", "관음동", "구암동", "국우동", "금호동", "노곡동", "노원동1가", "노원동2가", "노원동3가", "대현동", "도남동", "동변동", "동천동", "동호동", "매천동", "복현동", "사수동", "산격동", "서변동", "연경동", "읍내동", "조야동", "칠성동1가", "칠성동2가", "침산동", "태전동", "팔달동", "학정동"]
+            var nam = ["대명동", "봉덕동", "이천동"];
+            var seo = ["내당동", "비산동", "상리동", "원대동1가", "원대동2가", "원대동3가", "이현동", "중리동", "평리동"];
+            var suseong = ["가천동", "고모동", "노변동", "대흥동", "두산동", "만촌동", "매호동", "범물동", "범어동", "사월동", "삼덕동", "상동", "성동", "수성동1가", "수성동2가", "수성동3가", "수성동4가", "시지동", "신매동", "연호동", "욱수동", "이천동", "중동", "지산동", "파동", "황금동"];
+            var jung = ["계산동1가", "계산동2가", "공평동", "교동", "남산동", "남성로", "남일동", "달성동", "대봉동", "대신동", "대안동", "덕산동", "도원동", "동문동", "동산동", "동성로1가", "동성로2가", "동성로3가", "동인동1가", "동인동2가", "동인동3가", "동인동4가", "동일동", "문화동", "봉산동", "북내동", "북성로1가", "북성로2가", "사일동", "삼덕동1가", "삼덕동2가", "삼덕동3가", "상덕동", "상서동", "서내동", "서문로1가", "서문로2가", "서성로1가", "서성로2가", "서야동", "수동", "수창동", "시장북로", "완전동", "용덕동", "인교동", "장관동", "전동", "종로1가", "종로2가", "태평로1가", "태평로2가", "태평로3가", "포정동", "하서동", "향촌동", "화전동"];
+            var dalseo = ["갈산동", "감삼동", "대곡동", "대천동", "도원동", "두류동", "본동", "본리동", "상인동", "성당동", "송현동", "신당동", "용산동", "월성동", "월암동", "유천동", "이곡동", "장기동", "장동", "죽전동", "진천동", "파호동", "호림동", "호산동"]
+            var target = document.getElementById("dong");
         
-        id = request.form['regi_id']
-        pw = request.form['regi_pw']
- 
-        conn = mysql.connect()
-        cursor = conn.cursor()
-        sql = "INSERT INTO members VALUES ('%s', '%s')" % (id, pw)
-        cursor.execute(sql)
-        data = cursor.fetchall()
- 
-        if not data:
-            conn.commit()
-            return redirect(url_for('main'))
- 
-        else:
-            conn.rollback()
-            return "Register Failed"
- 
-        cursor.close()
-        conn.close()
- 
-    return render_template('register.html', error=error)
-
-@app.route('/home', methods=['POST', 'GET'])
-def home():
-    return render_template('home.html')
-
-@app.route('/food', methods= ['POST', 'GET'])
-def result():
-    if request.method == 'POST' :
-        result = request.form
-        Gu = request.form['gu']
-        myGu = guchange(Gu)
-        myDong = request.form['dong']
-        # myFood = request.form['food']
-        list = []
-        list = weather_API.get_weather()
-        if list[0] == "sunny":
-            weather = str("화창합니다")
-        elif list[0] == "cloudy":
-            weather = str("흐립니다")
-        elif list[0] == "rainy":
-            weather = str("비가 옵니다")
-        else:
-            weather = str("눈이 옵니다")
-        rank={}
-        rank = save.get_info(list[0])
-        sourcelist=[]
-        sourcelist=rank.get('_source')
-        foodlist=[]
-        foodlist=sourcelist.get('Food')
-        frelist=[]
-        frelist=sourcelist.get('Frequency')    
-        return render_template('food.html', result=result, myGu=myGu, myDong=myDong, foodlist=foodlist, weather=weather, engw=list[0], temperature=list[1])
-
-@app.route("/storelist", methods = ['POST', 'GET'])
-def foodlist():
-    if request.method == 'POST':
-        result = request.form
-        myGu = request.form.get("myGu")
-        myDong = request.form.get("myDong")
-        list = []
-        list = weather_API.get_weather()
-        myFood = request.form['food']
-        myStoreList = []
-        name = []
-        rating = []
-        link = []
-        save.save_data(list[0], myFood)
-        i=0
-        myStoreList = crawling.crawling(myGu, myDong, myFood)
-        if(len(myStoreList)<3):
-            for i in range(0,len(myStoreList)):
-                name.append(myStoreList[i][0])
-                rating.append(myStoreList[i][1])
-                link.append(myStoreList[i][2])
-        else:        
-            name.append(myStoreList[0][0])
-            rating.append(myStoreList[0][1])
-            link.append(myStoreList[0][2])
-            name.append(myStoreList[1][0])
-            rating.append(myStoreList[1][1])
-            link.append(myStoreList[1][2])
-            name.append(myStoreList[2][0])
-            rating.append(myStoreList[2][1])
-            link.append(myStoreList[2][2])
-
+            if(e.value == "a") var d = nam;
+            else if(e.value == "b") var d = dalseo;
+            else if(e.value == "c") var d = dong;
+            else if(e.value == "d") var d = buk;
+            else if(e.value == "e") var d = seo;
+            else if(e.value == "f") var d = suseong;
+            else if(e.value == "g") var d = jung;
+            else if(e.value == "h") var d = dalseong;
         
-        return render_template("storelist.html", myGu=myGu, myDong=myDong, result=result, myFood=myFood, myWeather=list[0], name = name, link = link, rating = rating)
-
- # 리뷰 화면
-@app.route('/reviewboard.html', methods=['GET', 'POST'])
-def reviewboard():
-    error = None
-    id = session['login_user']
- 
-     # 게시판에 글 등록하기
-    if request.method == 'POST':
-        store = request.form['store']
-        review = request.form['review']
-        conn = mysql.connect()
-        cursor = conn.cursor()
-        sql = "INSERT INTO reviewlist (store, id, review) VALUES ('%s', '%s', '%s')" % (store, id, review)  # 실행할 SQL문
-        cursor.execute(sql)
-        new_data = cursor.fetchall()
-
-        if not new_data:
-            conn.commit()
-            return redirect(url_for("reviewboard"))
- 
-        else:
-            conn.rollback()
-            return "Register Failed"
- 
-        cursor.close()
-        conn.close()
- 
-    elif request.method == 'GET':
-        conn = mysql.connect()
-        cursor = conn.cursor()
-        sql = "SELECT num, store, id, review, times FROM reviewlist ORDER BY times desc"
-        cursor.execute(sql)
-        data = cursor.fetchall()
- 
-        data_list = []
- 
-        for obj in data:
-            data_dic = {
-                'number': obj[0],
-                'restaruant': obj[1],
-                'writer': obj[2],
-                'con': obj[3],
-                'time':obj[4]
-            }
-            data_list.append(data_dic) # 완성된 딕셔너리를 list에 넣음
- 
-        cursor.close()
-        conn.close()
- 
-        return render_template('reviewboard.html', error=error, name=id, data_list=data_list) # html을 렌더하며 DB에서 받아온 값들을 넘김
- 
-    return render_template('reviewboard.html', error=error, name=id)
-
-if __name__ == '__main__':
-    app.run(debug = True)
+            target.options.length = 0;
+        
+            for (x in d) {
+                var opt = document.createElement("option");
+                opt.value = d[x];
+                opt.innerHTML = d[x];
+                target.appendChild(opt);
+            }	
+        }</script>
+    </script>
+  </head>
+  <body>
+    <div class="search">
+        <center>
+            <img src="{{url_for('static', filename='images/logo.png')}}" width="200" height="200">
+        </center>
+            
+        <center>
+            <h1>오늘 날씨엔 뭘 먹으면 좋을까?</h1>
+            <h2>날름날름 사이트에 오신 것을 환영합니다!</h2>
+        </center>
+        <!-- </div>
+        <div style="width:65%;height:200px;float: right;">
+            <h1>오늘 날씨엔 뭘 먹으면 좋을까?</h1>
+            <h2>날름날름 사이트에 오신 것을 환영합니다!</h2>
+        </div> -->
+	<form action = "/food" method = "POST">
+		<br><br>
+		<!-- <input type="search" name="keyword">
+		<input type="submit" value="검쉑쉑"> -->
+        <div id="divPosition">
+            사용자님의 현위치를 설정해주세요!
+            <select name = "gu" onchange="categoryChange(this)">
+                <option>구를 선택해주세요</option>
+                <option value="a">남구</option>
+                <option value="b">달서구</option>
+                <option value="c">동구</option>
+                <option value="d">북구</option>
+                <option value="e">서구</option>
+                <option value="f">수성구</option>
+                <option value="g">중구</option>
+                <option value="h">달성구</option>
+            </select>
+            <select name = "dong" id="dong">
+            <option>동/읍/면을 선택해주세요</option>
+            </select>
+            <input type="submit" value="전 여기 삽니다만..." class="input-btn">
+        </div>
+        </form>
+    </div>
+  </body>
+</html>
