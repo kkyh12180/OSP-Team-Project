@@ -4,6 +4,8 @@ from urllib.request import urlopen
 from urllib.parse import quote
 from bs4 import BeautifulSoup
 import sys
+import ssl
+import urllib
  
 def crawling1(gu, dong, food):
 
