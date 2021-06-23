@@ -8,8 +8,9 @@ import sys
 def crawling1(gu, dong, food):
 
     region = quote("대구")
+    context = ssl._create_unverified_context()
     string = "https://search.naver.com/search.naver?where=nexearch&sm=top_sly.hst&fbm=1&acr=1&acq=%EB%8C%80%EA%B5%AC+%EB%B6%81%EA%B5%AC+&qdt=0&ie=utf8&query=" + region + "+" + quote(gu) + "+" + quote(dong) + "+" + quote(food)
-    tmp = urlopen(string)
+    tmp = urllib.request.urlopen(string, context=context)
     url = tmp.read().decode("utf-8")
 
     soup = BeautifulSoup(url, "html.parser")
