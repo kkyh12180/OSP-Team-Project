@@ -1,7 +1,11 @@
 # 오픈소스프로그래밍 팀프로젝트 9팀 사용자 설명서(README)
-
+<br>
 시연영상 유튜브 URL : https://www.youtube.com/watch?v=zEDx4OPzJUI
+<br>
 
+### zip파일 다운받은 후 main.py 실행<br>
+<br><br>
+### <화면별 설명>
 __1. login.html__
 <img width="1792" alt="login" src="https://user-images.githubusercontent.com/72423836/123110282-e5b4e880-d476-11eb-9b18-35b6662ed34f.png"><br>
 (1) 이전에 회원가입을 했을 경우 사용자의 아이디와 비밀번호를 입력하여 ‘Sign in’ 버튼을 누른다. (아이디나 비밀번호가 일치하지 않을 경우, 로그인이 되지 않는다.)<br>
