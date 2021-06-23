@@ -5,7 +5,7 @@ from urllib.parse import quote
 from bs4 import BeautifulSoup
 import sys
  
-def crawling(gu, dong, food):
+def crawling1(gu, dong, food):
 
     region = quote("대구")
     string = "https://search.naver.com/search.naver?where=nexearch&sm=top_sly.hst&fbm=1&acr=1&acq=%EB%8C%80%EA%B5%AC+%EB%B6%81%EA%B5%AC+&qdt=0&ie=utf8&query=" + region + "+" + quote(gu) + "+" + quote(dong) + "+" + quote(food)
@@ -39,9 +39,39 @@ def crawling(gu, dong, food):
             infos.append([name, rating, link])
     return infos
 
+def crawling2(gu, dong, food):
+    region = quote("대구")
+    string = "https://search.naver.com/search.naver?where=nexearch&sm=top_sly.hst&fbm=1&acr=1&acq=%EB%8C%80%EA%B5%AC+%EB%B6%81%EA%B5%AC+&qdt=0&ie=utf8&query=" + region + "+" + quote(gu) + "+" + quote(dong) + "+" + quote(food)
+    tmp = urlopen(string)
+    url = tmp.read().decode("utf-8")
+
+    soup = BeautifulSoup(url, "html.parser")
+    divs = soup.findAll('div', {'class' : 'Stgs-'}) 
+
+    infos = []
+    name = ""
+    
+    for div in divs:
+        name_sects = div.findAll('div', {'class' : '_1nKCj'})
+        for name_sect in name_sects:
+            name = name_sect.text
+            infos.append([name, '', ''])
+
+    return infos
+
+def crawling(gu, dong, food):
+    infos = crawling1(gu, dong, food)
+    if (len(infos) == 0) : return crawling2(gu, dong, food)
+    else : return infos
+
 if __name__== '__main__':
 
-   kdong = "산격3동"
+   kdong = "사수동"
    kgu = "북구"   
-   kfood = "떡볶이"
-   #print(crawling(kgu, kdong, kfood))
+   kfood = "짬뽕"
+   print(crawling(kgu, kdong, kfood))
+
+   kdong = "산격3동"
+   kgu = "북구"
+   kfood = "짬뽕"
+   print(crawling(kgu, kdong, kfood))
