@@ -12,14 +12,22 @@
 <body style="background-size: 100px 100px; font-family: Poor Story";>
     <div style="text-align:center; margin-top:-85px">
         <a href={{ url_for('home') }}><img src="{{url_for('static', filename = 'images/logo2.png')}}" width="400" height="400" alt="logo" border="0"></a>
+        <div style="position: absolute;top:290px; left:1350px";>
+        <form action="/review" method="POST" style="text-align:right;">
+            <!--<input type="hidden" name="storename" value={{name[2]}}>-->
+            <input type="submit" value="음식점 리뷰보기" name="reviewlists" style="font-family:'Poor Story'; background-color:orange; border:0; font-size:20px; border-radius:5px; color:white;">
+        </form>
+        </div>
+        <div style="font-size: 1.7em; position: absolute; top:270px; left:650px; font-weight:600;">
+        대구 {{ myGu }} {{ myDong }}에 <br>{{ myFood }}을(를) 파는 음식점은 아래와 같아요!
+        </div>
     </div>
-    <div style="float:right; margin-top:520px; margin-right:300px;">
+    <div style="float:right; top:30px; margin-right:300px;">
     <form action="/storelist" method="POST"><!--action 속성에는 이동할 웹페이지 주소 기입-->
             <select name="food" style="width:180px; height:40px; left:80; font-size: 1.5em;">
                 {% if myWeather=="sunny" %}
                     <option value="">다른음식선택</option>
                     <option value="팥빙수">팥빙수</option>
-                    <option value="회사원">수박화채</option>
                     <option value="냉면">냉면</option>
                     <option value="초계국수">초계국수</option>
                     <option value="메밀소바">메밀소바</option>
@@ -37,7 +45,6 @@
                 {% elif myWeather=="rain" %}
                     <option value="">다른음식선택</option>
                     <option value="파전">파전</option>
-                    <option value="막걸리">막걸리</option>
                     <option value="칼국수">칼국수</option>
                     <option value="삼겹살">삼겹살</option>
                     <option value="짬뽕">짬뽕</option>
@@ -56,28 +63,20 @@
         <input type="hidden" name="myGu" value={{ myGu }}>
         <input type="hidden" name="myDong" value ={{ myDong }} >
         <input type="submit" value="이게 먹고 싶어요!" style="font-family:'Poor Story'; background-color:orange; border:0; font-size:23px; border-radius:5px; color:white;">
-    </form>
+   </form>
     </div>
-    <div style="font-size: 1.7em; position:absolute; top:27%; left:46%; margin-left:-280px; font-weight:600;">
-        <form action="/review" method="POST" style="text-align:right;">
-            <input type="hidden" name="storename" value={{name[2]}}>
-            <input type="submit" value="음식점 리뷰보기">
-        </form>
-        대구 {{ myGu }}, {{ myDong }}에 {{ myFood }}을(를) 파는 음식점은 아래와 같아요!
-    </div>
+    
+    
     <div style="border:dashed orange; font-family:'Nanum Gothic', arial; background-color:#FFFFE0; position:absolute; top:67%; left:55%; width:1300px; height:510px;background-color:white; margin:-300px 0px 0px -750px; font-size: 2em; border-radius:30px;">
         <!--key로는 구, 동, 음식종류-->
         <div style="border:1px solid white; background-color:#FFFFE0; padding:3%; margin:3%">
-            가게이름: {{name[0]}}, {{rating[0]}}
-            <a href={{link[0]}} target="blank">링크</a>
+            가게이름: {{name[0]}}
         </div>
         <div style="border:1px solid white; background-color:#FFFFE0; padding:3%; margin: 3%">
-            가게이름: {{name[1]}}, {{rating[1]}}
-            <a href={{link[1]}} target="blank">링크</a>
+            가게이름: {{name[1]}}
         </div>
         <div style="border:1px solid white; background-color:#FFFFE0; padding:3%; margin: 3%">
-            가게이름: {{name[2]}}, {{rating[2]}}
-            <a href={{link[2]}} target="blank">링크</a>
+            가게이름: {{name[2]}}
         </div>
     </div>
 </body>
