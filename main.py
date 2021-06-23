@@ -124,6 +124,12 @@ def result():
         frelist=sourcelist.get('Frequency')    
         return render_template('food.html', result=result, myGu=myGu, myDong=myDong, foodlist=foodlist, weather=weather, engw=list[0], temperature=list[1])
 
+#리뷰화면으로 이동
+@app.route('/review', methods=['GET', 'POST'])
+def gotoreview():
+    return redirect(url_for("reviewboard"))
+
+#가게 화면
 @app.route("/storelist", methods = ['POST', 'GET'])
 def foodlist():
     if request.method == 'POST':
@@ -155,12 +161,11 @@ def foodlist():
             name.append(myStoreList[2][0])
             rating.append(myStoreList[2][1])
             link.append(myStoreList[2][2])
-
         
         return render_template("storelist.html", myGu=myGu, myDong=myDong, result=result, myFood=myFood, myWeather=list[0], name = name, link = link, rating = rating)
-
+ 
  # 리뷰 화면
-@app.route('/reviewboard.html', methods=['GET', 'POST'])
+@app.route('/reviewboard', methods=['GET', 'POST'])
 def reviewboard():
     error = None
     id = session['login_user']
