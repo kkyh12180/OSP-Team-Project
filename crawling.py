@@ -1,24 +1,20 @@
 #!/usr/bin/python3
 #-*- coding:utf-8 -*- 
-import ssl
 from urllib.request import urlopen
 from urllib.parse import quote
 from bs4 import BeautifulSoup
 import sys
-import urllib
-import ssl
  
 def crawling(gu, dong, food):
 
     region = quote("대구")
-    context = ssl._create_unverified_context()
-    string = "https://search.naver.com/search.naver?where=nexearch&sm=top_sly.hst&fbm=1&acr=2&acq=%EB%8C%80%EA%B5%AC+&qdt=0&ie=utf8&query=" + region + "+" + quote(gu) + "+" + quote(dong) + "+" + quote(food)
-    tmp = urllib.request.urlopen(string, context=context)
+    string = "https://search.naver.com/search.naver?where=nexearch&sm=top_sly.hst&fbm=1&acr=1&acq=%EB%8C%80%EA%B5%AC+%EB%B6%81%EA%B5%AC+&qdt=0&ie=utf8&query=" + region + "+" + quote(gu) + "+" + quote(dong) + "+" + quote(food)
+    tmp = urlopen(string)
     url = tmp.read().decode("utf-8")
 
     soup = BeautifulSoup(url, "html.parser")
     divs = soup.findAll('ul', {'class' : '_3bohv _1V_Nc'}) 
-    
+
     infos = []
     name = ""
     link = ""
@@ -48,4 +44,4 @@ if __name__== '__main__':
    kdong = "산격3동"
    kgu = "북구"   
    kfood = "떡볶이"
-   crawling(kgu, kdong, kfood)
+   #print(crawling(kgu, kdong, kfood))
