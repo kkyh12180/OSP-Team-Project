@@ -28,13 +28,23 @@
 </head>
  
 <body>
+    <div style="text-align:center; margin-top:0px">
+        <a href={{ url_for('home') }}><img src="{{url_for('static', filename = 'images/logo.png')}}" width="400" height="400" alt="logo" border="0"></a>
+    </div>
     <p>
         <h1 align="center" style="font-family:'Poor Story', arial;"> 여러분의 후기를 남겨주세요! </h1>
+        <center>
+        <form action="/logout" method="POST">
+                <input type="submit" value="로그아웃" class="input-btn" style="font-family:'Poor Story'; font-size:18px;background-color:orange; border:0; border-radius:5px; color:white;">
+            </form>
+        </center>
     </p>
  
     <form method="POST">
         <p>
-            <h2>한줄평 남기기</h2>
+            <h2>한줄평 남기기
+            
+            </h2>
             <label>식당 &nbsp
                 <input type="text" name="store" placeholder="식당이름을 입력해주세요">
             </label>
@@ -44,6 +54,7 @@
             <lable>한줄평 &nbsp
                 <input type="text" name="review" placeholder="후기를 작성해주세요">
             </label>
+            
             &nbsp
             <input type="submit" value="작성하기" onclick="alert('작성 완료!')">
         </p>

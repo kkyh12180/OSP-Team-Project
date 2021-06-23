@@ -6,12 +6,13 @@ import weather_API
 import crawling
 import init_data
 import save
+import time
 
 def guchange(alpha):
     if alpha=="a":
         return str("남구")
     if alpha=="b":
-        return str("달서구")
+        return str("달성군")
     if alpha=="c":
         return str("동구")
     if alpha=="d":
@@ -23,20 +24,19 @@ def guchange(alpha):
     if alpha=="g":
         return str("중구")    
     if alpha=="h":
-        return str("달성군")                     
-
+        return str("달서구")                     
 mysql = MySQL()
 app = Flask(__name__)
 
 #DB 값 설정
 app.config['MYSQL_DATABASE_USER'] = 'root'
-app.config['MYSQL_DATABASE_PASSWORD'] = 'ospteamproject9'
+app.config['MYSQL_DATABASE_PASSWORD'] = 'dmswn7227'
 app.config['MYSQL_DATABASE_DB'] = 'reviewdb'
 app.config['MYSQL_DATABASE_HOST'] = 'localhost'
 app.secret_key = "ABCDEFG"
 mysql.init_app(app)
 
- # 로그인 화면
+
 @app.route('/', methods=['GET', 'POST'])
 def main():
     error = None
@@ -94,7 +94,13 @@ def register():
 
 @app.route('/home', methods=['POST', 'GET'])
 def home():
-    return render_template('home.html')
+    id = session['login_user']
+
+    return render_template('home.html', id=id)
+
+@app.route('/logout', methods= ['POST', 'GET'])
+def logout():
+    return redirect(url_for("main"))
 
 @app.route('/food', methods= ['POST', 'GET'])
 def result():
@@ -114,8 +120,9 @@ def result():
             weather = str("비가 옵니다")
         else:
             weather = str("눈이 옵니다")
+        
         rank={}
-        rank = save.get_info(list[0])
+        rank = save.get_info("cloudy")
         sourcelist=[]
         sourcelist=rank.get('_source')
         foodlist=[]
@@ -124,12 +131,6 @@ def result():
         frelist=sourcelist.get('Frequency')    
         return render_template('food.html', result=result, myGu=myGu, myDong=myDong, foodlist=foodlist, weather=weather, engw=list[0], temperature=list[1])
 
-#리뷰화면으로 이동
-@app.route('/review', methods=['GET', 'POST'])
-def gotoreview():
-    return redirect(url_for("reviewboard"))
-
-#가게 화면
 @app.route("/storelist", methods = ['POST', 'GET'])
 def foodlist():
     if request.method == 'POST':
@@ -163,9 +164,13 @@ def foodlist():
             link.append(myStoreList[2][2])
         
         return render_template("storelist.html", myGu=myGu, myDong=myDong, result=result, myFood=myFood, myWeather=list[0], name = name, link = link, rating = rating)
- 
- # 리뷰 화면
-@app.route('/reviewboard', methods=['GET', 'POST'])
+
+@app.route('/review', methods=['GET', 'POST'])
+def gotoreview():
+
+    return redirect(url_for("reviewboard"))
+
+@app.route('/reviewboard.html', methods=['GET', 'POST'])
 def reviewboard():
     error = None
     id = session['login_user']
@@ -216,6 +221,9 @@ def reviewboard():
         return render_template('reviewboard.html', error=error, name=id, data_list=data_list)
  
     return render_template('reviewboard.html', error=error, name=id)
+
+if __name__ == '__main__':
+    app.run(debug = True)
 
 if __name__ == '__main__':
     app.run(debug = True)

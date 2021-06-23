@@ -5,22 +5,25 @@
     <title>날름날음 로그인</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic&family=Poor+Story&display=swap');
-        body{padding:0px; margin:0px; font-family:'Poor Story', arial;}
+        body{ padding:0px; margin:0px; font-family: "Poor Story", sans-serif;}
         #divPosition{
-            background-color:gold;
-            border:1px;
-            border-radius:10px;
-            position:absolute;
-            height:400px;
-            width:500px;
-            margin:-150px 0px 0px -200px;
-            top:40%;
-            left:40%;
+            border:dashed orange;
+            background-color:#FFFFE0;
+            position:relative;
+            height:1-0px;
+            width:750px;
+            margin:45px 0px 0px -380px;
+            top:45%;
+            left:50%;
             padding:5px;
+            font-size:1.5em;
         }
     </style>
 </head>
 <body>
+<div style="text-align:center; margin-top:0px">
+        <a href={{ url_for('home') }}><img src="{{url_for('static', filename = 'images/logo.png')}}" width="400" height="400" alt="logo" border="0"></a>
+    </div>
 <form method="POST" id="authForm">
     <div id = "divPosition">
         <p>
@@ -39,10 +42,10 @@
             <input type="password" id="pw" name="pw" placeholder="pw">
         </p>
         <p align="center">
-            <input type="submit" name="sign_in" value="sign in" style="WIDTH: 183pt"/>
+            <input type="submit" name="sign_in" value="sign in" style="font-family:'Poor Story'; font-size:18px;background-color:orange; border:0; border-radius:5px; color:white;">
         </p>
         <p align="center">
-            <input type=button style="WIDTH: 183pt; background-color:transparent;  border:0px transparent solid;"
+            <input type="button" style="font-family:'Poor Story'; font-size:18px;background-color:orange; border:0; border-radius:5px; color:white;"
                 value="Register" name="register" onclick="location.href='register.html'">
         </p>
     </div>

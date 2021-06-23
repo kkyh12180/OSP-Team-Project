@@ -36,7 +36,7 @@ def get_weather():
     url = 'http://apis.data.go.kr/1360000/VilageFcstInfoService/getVilageFcst'
     queryParams = '?' + urlencode(
     { 
-        quote_plus('ServiceKey') : 'xDhD67tm+ztLeTKXUd/2gTYy8d+KUCSIR8ejj+vxdhdWdNqEjDEvkxYv1anr1qv16UoabjXKFu9mbebwg/Xvwg==', 
+        quote_plus('ServiceKey') : 'I5nP4yOLDNajCWegBqdC757NH5uY21Sh+Qb+nzXyc9lFOILSPn+Q/IGxr6TqAd7fBoNBPMO16z5ExejpCvme7w==',
         quote_plus('pageNo') : '1', 
         quote_plus('numOfRows') : '10', 
         quote_plus('dataType') : 'JSON', 
@@ -48,6 +48,7 @@ def get_weather():
 
     q_url = url + queryParams
     response = requests.get(q_url)
+
 
     w_dict = json.loads(response.text)
     w_response = w_dict.get("response")
