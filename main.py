@@ -30,13 +30,14 @@ app = Flask(__name__)
 
 #DB 값 설정
 app.config['MYSQL_DATABASE_USER'] = 'root'
-app.config['MYSQL_DATABASE_PASSWORD'] = 'dmswn7227'
+app.config['MYSQL_DATABASE_PASSWORD'] = 'ospteamproject9'
 app.config['MYSQL_DATABASE_DB'] = 'reviewdb'
 app.config['MYSQL_DATABASE_HOST'] = 'localhost'
 app.secret_key = "ABCDEFG"
 mysql.init_app(app)
 
 
+#첫 화면: 로그인 페이지
 @app.route('/', methods=['GET', 'POST'])
 def main():
     error = None
@@ -92,16 +93,19 @@ def register():
  
     return render_template('register.html', error=error)
 
+#홈 화면
 @app.route('/home', methods=['POST', 'GET'])
 def home():
     id = session['login_user']
 
     return render_template('home.html', id=id)
 
+#로그아웃-첫 페이지로 돌아감
 @app.route('/logout', methods= ['POST', 'GET'])
 def logout():
     return redirect(url_for("main"))
 
+#날씨에 따른 음식 추천
 @app.route('/food', methods= ['POST', 'GET'])
 def result():
     if request.method == 'POST' :
@@ -131,6 +135,7 @@ def result():
         frelist=sourcelist.get('Frequency')    
         return render_template('food.html', result=result, myGu=myGu, myDong=myDong, foodlist=foodlist, weather=weather, engw=list[0], temperature=list[1])
 
+#가게 추천
 @app.route("/storelist", methods = ['POST', 'GET'])
 def foodlist():
     if request.method == 'POST':
@@ -165,11 +170,13 @@ def foodlist():
         
         return render_template("storelist.html", myGu=myGu, myDong=myDong, result=result, myFood=myFood, myWeather=list[0], name = name, link = link, rating = rating)
 
+#리뷰게시판 버튼 클릭 시 리뷰게시판으로 이동
 @app.route('/review', methods=['GET', 'POST'])
 def gotoreview():
 
     return redirect(url_for("reviewboard"))
 
+#리뷰게시판 
 @app.route('/reviewboard.html', methods=['GET', 'POST'])
 def reviewboard():
     error = None
@@ -195,7 +202,7 @@ def reviewboard():
  
         cursor.close()
         conn.close()
- 
+    #게시판 글 목록 
     elif request.method == 'GET':
         conn = mysql.connect()
         cursor = conn.cursor()
