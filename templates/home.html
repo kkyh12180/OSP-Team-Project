@@ -5,18 +5,21 @@
     <meta name="viewport" content="width=device-width">
     <title>날름날음날씨와음식</title>
     <style>
-        body{ padding:0px; margin:0px;}
+        @import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic&family=Poor+Story&display=swap');
+        body{ padding:0px; margin:0px; font-family: "Poor Story", sans-serif;}
         #divPosition{
+            border:dashed orange;
             position:relative;
-            height:300px;
-            width:700px;
-            margin:0px 0px 0px -290px;
+            height:1-0px;
+            width:750px;
+            margin:-50px 0px 0px -380px;
             top:45%;
             left:50%;
             padding:5px;
+            font-size:1.5em;
         }
     </style>
-    <script type = "text/javascript">
+    <script type = "text/javascript" >
         function categoryChange(e) {
             var nam = ["대명동", "봉덕동", "이천동"];
             var dalseong = ["가창면", "구지면", "논공읍", "다사읍", "옥포읍", "유가읍", "하빈면", "현풍읍", "화원읍"];
@@ -30,13 +33,13 @@
             var target = document.getElementById("dong");
         
             if(e.value == "a") var d = nam;
-            else if(e.value == "b") var d = dalseong;
+            else if(e.value == "b") var d = dalseo;
             else if(e.value == "c") var d = dong;
             else if(e.value == "d") var d = buk;
             else if(e.value == "e") var d = seo;
             else if(e.value == "f") var d = suseong;
             else if(e.value == "g") var d = jung;
-            else if(e.value == "h") var d = dalseo
+            else if(e.value == "h") var d = dalseong;
         
             target.options.length = 0;
         
@@ -52,39 +55,35 @@
   <body>
     <div class="search">
         <center>
-            <img src="{{url_for('static', filename='images/logo.png')}}" width="200" height="200">
+            <!--<img src="C:\Users\이은지\Desktop\OSP-TeamPJ\static\images\logo1.png" width="250" height="250" alt="logo">-->
+            <img src="{{url_for('static', filename='images/logo1.png')}}" width="300" height="300" alt="logo">
         </center>
             
         <center>
-            <h1>오늘 날씨엔 뭘 먹으면 좋을까?</h1>
-            <h2>날름날름 사이트에 오신 것을 환영합니다!</h2>
+            <h2 style="font-family:'Nanum Gothic'">
+            오늘 날씨엔 뭘 먹으면 좋을까?<br>
+            날름날음 사이트에 오신 것을 환영합니다!
+            </h2><br>
         </center>
-        <!-- </div>
-        <div style="width:65%;height:200px;float: right;">
-            <h1>오늘 날씨엔 뭘 먹으면 좋을까?</h1>
-            <h2>날름날름 사이트에 오신 것을 환영합니다!</h2>
-        </div> -->
 	<form action = "/food" method = "POST">
 		<br><br>
-		<!-- <input type="search" name="keyword">
-		<input type="submit" value="검쉑쉑"> -->
         <div id="divPosition">
             사용자님의 현위치를 설정해주세요!
             <select name = "gu" onchange="categoryChange(this)">
                 <option>구를 선택해주세요</option>
                 <option value="a">남구</option>
-                <option value="b">달성군</option>
+                <option value="b">달서구</option>
                 <option value="c">동구</option>
                 <option value="d">북구</option>
                 <option value="e">서구</option>
                 <option value="f">수성구</option>
                 <option value="g">중구</option>
-                <option value="h">달서구</option>
+                <option value="h">달성군</option>
             </select>
             <select name = "dong" id="dong">
             <option>동/읍/면을 선택해주세요</option>
             </select>
-            <input type="submit" value="전 여기 삽니다만..." class="input-btn">
+            <input type="submit" value="전 여기 삽니다만..." class="input-btn" style="font-family:'Poor Story'; background-color:orange; border:0; border-radius:5px; color:white;">
         </div>
         </form>
     </div>
